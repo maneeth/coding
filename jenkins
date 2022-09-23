@@ -2,8 +2,12 @@ node(){
 stage("git checkout"){
 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitV', url: 'https://github.com/maneeth/coding.git']]])
 }
-stage("maven build"){
-sh "mvn package"
+
+stage(" Maven Clean Package"){
+def mavenHome =  tool name: "Maven-3.6.1", type: "maven"
+def mavenCMD = "${mavenHome}/bin/mvn"
+sh "${mavenCMD} clean package"
+      
 }
 }
 
